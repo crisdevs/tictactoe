@@ -1,0 +1,29 @@
+*{
+    box-sizing: border-box;
+}
+.container{
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: #3d405b;
+    color: #e07a5f;
+}
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(80px, 180px));
+    grid-template-rows: repeat(3, minmax(80px, 180px));
+    justify-content: center;
+    
+}
+.square-0, .square-1, .square-3, .square-4{
+    border-right-style: solid;
+    border-bottom-style: solid;
+}
+.square-2, .square-5{
+    border-bottom-style: solid;
+}
+.square-6, .square-7{
+    border-right-style: solid;
+}
