@@ -1,17 +1,19 @@
 
 const game = new Game();
+//Grabs all the playable squares
 const boxes = document.querySelectorAll("div[class^='square']");
-let gameState = true;
-
-
-game.chooseFirstPlayer();
+const turnNotification = document.querySelector(".player-turn");
 const players = game.players;
 
+//Sets the Player's Turn text to the first player's shape.
+turnNotification.textContent = game.chooseFirstPlayer();
 
-
+/**
+ * Checks which player's turn it is and sets the player's turn text to the active player's shape.
+ *
+ * @return {Object} The player object in where isTurn is true.
+ */
 const checkTurn = () =>{
-    const turnNotification = document.querySelector(".player-turn");
-
         if(players[0].isTurn){
             turnNotification.textContent = players[1].playerShape;
 
@@ -26,15 +28,11 @@ const checkTurn = () =>{
             players[1].isTurn = false;
             return players[1]
         }
-    
-
-
-
-
-
 }
-
-
+/**
+ * Sets event listeners to all playable squares for when the player plays their turn.
+ *
+ */
 const playTurn = () =>{
     for(let i =0; i < boxes.length; i++){
         boxes[i].addEventListener("click", (e)=>{
@@ -49,5 +47,5 @@ const playTurn = () =>{
 
 
 playTurn();
-
+console.log(game.board.spaces);
 
