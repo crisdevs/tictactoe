@@ -27,14 +27,14 @@ div[class^="square"]:hover{
     justify-content: center;
     
 }
-.square-0, .square-1, .square-3, .square-4{
+.square-0-0, .square-0-1, .square-1-0, .square-1-1{
     border-right-style: solid;
     border-bottom-style: solid;
 }
-.square-2, .square-5{
+.square-0-2, .square-1-2{
     border-bottom-style: solid;
 }
-.square-6, .square-7{
+.square-2-0, .square-2-1{
     border-right-style: solid;
 }
 

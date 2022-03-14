@@ -2,7 +2,6 @@ class Game{
 
     constructor(){
         this.players = this.createPlayers();
-        this.board = this.createBoard();
     }
 
 /**
@@ -12,7 +11,7 @@ class Game{
  */
     createPlayers() {
         const newPlayers = [new Player("X", false), new Player("O", false)];
-
+        console.log(newPlayers);
         return newPlayers;
     }
 /**
@@ -29,11 +28,11 @@ class Game{
         return firstPlayer.playerShape;
     }
 
-    createBoard(){
-        const board = new Board();
+    get board(){
+        const blankBoard = new Board();
 
-        board.populateBoard();
+        blankBoard.populateBoard();
 
-        return board;
+        return blankBoard;
     }
 }

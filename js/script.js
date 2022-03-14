@@ -34,11 +34,18 @@ const checkTurn = () =>{
  *
  */
 const playTurn = () =>{
+    
     for(let i =0; i < boxes.length; i++){
         boxes[i].addEventListener("click", (e)=>{
             if(e.target.textContent === ""){
+                const spaceClass = e.target.className;
+                const firstIndex = parseInt(spaceClass.charAt(7));
+                const secondIndex = parseInt(spaceClass.charAt(9));
                 const activePlayer = checkTurn();
+
                 e.target.textContent = activePlayer.playerShape;
+                game.board.spaces[firstIndex][secondIndex] = activePlayer.shape;
+                console.log(`${game.board.spaces}`);
             }
            
         });
