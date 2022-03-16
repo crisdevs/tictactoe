@@ -54,6 +54,17 @@ const playTurn = () =>{
     }
 }
 
+const checkIfWon = () =>{
+    const space = gameBoard.spaces;
+    for(let i =0; i < space; i++){
+        for(let j = 0; j < space[i]; i++){
+            if(space[i][j]){
+
+            }
+        }
+    }
+}
+
 
 playTurn();
 console.log(game.board.spaces);
