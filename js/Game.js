@@ -2,6 +2,7 @@ class Game{
 
     constructor(){
         this.players = this.createPlayers();
+        this.board = new Board();
     }
 
 /**
@@ -26,13 +27,5 @@ class Game{
         firstPlayer.isTurn = true;
 
         return firstPlayer.playerShape;
-    }
-
-    get board(){
-        const blankBoard = new Board();
-
-        blankBoard.populateBoard();
-
-        return blankBoard;
     }
 }

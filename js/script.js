@@ -4,6 +4,9 @@ const game = new Game();
 const boxes = document.querySelectorAll("div[class^='square']");
 const turnNotification = document.querySelector(".player-turn");
 const players = game.players;
+const gameBoard = game.board;
+    
+gameBoard.populateBoard();
 
 //Sets the Player's Turn text to the first player's shape.
 turnNotification.textContent = game.chooseFirstPlayer();
@@ -34,7 +37,6 @@ const checkTurn = () =>{
  *
  */
 const playTurn = () =>{
-    
     for(let i =0; i < boxes.length; i++){
         boxes[i].addEventListener("click", (e)=>{
             if(e.target.textContent === ""){
@@ -42,12 +44,12 @@ const playTurn = () =>{
                 const firstIndex = parseInt(spaceClass.charAt(7));
                 const secondIndex = parseInt(spaceClass.charAt(9));
                 const activePlayer = checkTurn();
-
+                
                 e.target.textContent = activePlayer.playerShape;
-                game.board.spaces[firstIndex][secondIndex] = activePlayer.shape;
-                console.log(`${game.board.spaces}`);
-            }
-           
+                console.log(`First Index:${firstIndex} Second Index:${secondIndex} Active Shape:${activePlayer.playerShape}`);
+                gameBoard.spaces[firstIndex][secondIndex] = activePlayer.playerShape;
+                console.log(`${gameBoard.spaces}`);
+            }        
         });
     }
 }
