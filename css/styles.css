@@ -41,3 +41,18 @@ div[class^="square"]:hover{
 .turn{
     font-size: 26px;
 }
+
+.reset{
+    align-self: center;
+    font-size: 26px;
+    padding: 25px 70px 25px 70px;
+    color: #e07a5f;
+    background-color: #2b2d42;
+    border-radius: 8px;
+    border: none;
+}
+
+.reset:hover{
+    background-color: #e07a5f;
+    color: #2b2d42;
+}

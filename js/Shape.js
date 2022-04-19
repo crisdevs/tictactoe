@@ -1,7 +1,7 @@
 class Shape {
-    constructor(shape, owner){
-        this.shape = shape;
+    constructor(symbol, owner){
+        this.symbol = symbol;
         this.owner = owner;
-    }
+    } 
 
 }

@@ -3,8 +3,8 @@ const game = new Game();
 //Grabs all the playable squares
 const boxes = document.querySelectorAll("div[class^='square']");
 const turnNotification = document.querySelector(".player-turn");
-const players = game.players;
-const gameBoard = game.board;
+let players = game.players;
+let gameBoard = game.board;
     
 gameBoard.populateBoard();
 
@@ -18,14 +18,14 @@ turnNotification.textContent = game.chooseFirstPlayer();
  */
 const checkTurn = () =>{
         if(players[0].isTurn){
-            turnNotification.textContent = players[1].playerShape;
+            turnNotification.textContent = players[1].shape.symbol;
 
             players[0].isTurn = false;
             players[1].isTurn = true;
             return players[0];
         }
         else{
-            turnNotification.textContent = players[0].playerShape;
+            turnNotification.textContent = players[0].shape.symbol;
 
             players[0].isTurn = true;
             players[1].isTurn = false;
@@ -39,33 +39,130 @@ const checkTurn = () =>{
 const playTurn = () =>{
     for(let i =0; i < boxes.length; i++){
         boxes[i].addEventListener("click", (e)=>{
-            if(e.target.textContent === ""){
+            if(e.target.textContent === "" && game.gameState){
                 const spaceClass = e.target.className;
                 const firstIndex = parseInt(spaceClass.charAt(7));
                 const secondIndex = parseInt(spaceClass.charAt(9));
                 const activePlayer = checkTurn();
-                
-                e.target.textContent = activePlayer.playerShape;
-                console.log(`First Index:${firstIndex} Second Index:${secondIndex} Active Shape:${activePlayer.playerShape}`);
-                gameBoard.spaces[firstIndex][secondIndex] = activePlayer.playerShape;
-                console.log(`${gameBoard.spaces}`);
+        
+                e.target.textContent = activePlayer.shape.symbol;
+                gameBoard.spaces[firstIndex][secondIndex] = activePlayer.shape;
+                console.log(gameBoard.spaces);
+                checkHorizontalWin();
+                checkVerticalWin();
+                checkDiagonalWin();
             }        
         });
     }
 }
 
-const checkIfWon = () =>{
+const checkHorizontalWin = () =>{
     const space = gameBoard.spaces;
-    for(let i =0; i < space; i++){
-        for(let j = 0; j < space[i]; i++){
-            if(space[i][j]){
-
+   
+        for(let i =0; i< space.length; i++){
+            let amountOfShapeX = 0;
+            let amountOfShapeO = 0;
+            if(space[i][0] !== undefined && space[i][1] !== undefined && space[i][2] !== undefined){
+                for(let j = 0; j < space[i].length; j++){
+                    if(space[i][j].owner.shape.symbol === "X"){
+                        amountOfShapeX++;
+                    }
+                    else if(space[i][j].owner.shape.symbol === "O"){
+                        amountOfShapeO++;
+                }
+                if(amountOfShapeX === 3){
+                    console.log("Player X won!");
+                    game.gameState = false;
+                }
+                else if(amountOfShapeO === 3){
+                    console.log("Player O won!");
+                    game.gameState = false;
+                }
             }
         }
     }
 }
 
+const checkVerticalWin = () =>{
+    const space = gameBoard.spaces;
+    
+    for(let i =0; i< space.length; i++){
+        let amountOfShapeX = 0;
+        let amountOfShapeO = 0;
+        if(space[0][i] !== undefined && space[1][i] !== undefined && space[2][i] !== undefined){
+            for(let j = 0; j < space[i].length; j++){
+                if(space[j][i].owner.shape.symbol === "X"){
+                    amountOfShapeX++;
+                }
+                else if(space[j][i].owner.shape.symbol === "O"){
+                    amountOfShapeO++;
+            }
+            if(amountOfShapeX === 3){
+                console.log("Player X won!");
+                game.gameState = false;
+            }
+            else if(amountOfShapeO === 3){
+                console.log("Player O won!");
+                game.gameState = false;
+            }
+        }
+    }
+}
+}
+
+    const checkDiagonalWin = () =>{
+        const space = gameBoard.spaces;
+
+            let amountOfShapeX = 0;
+            let amountOfShapeO = 0;
+            if(space[0][0] !== undefined && space[1][1] !== undefined && space[2][2] !== undefined){
+                for(let i =0; i < space.length; i++){
+                    if(space[i][i].owner.shape.symbol === "X"){
+                        amountOfShapeX++;
+                    }
+                    else if(space[i][i].owner.shape.symbol === "O"){
+                        amountOfShapeO++;
+                }
+            }
+            console.log(`Amount of diagonal O:${amountOfShapeO}`);
+            console.log(`Amount of diagonal X:${amountOfShapeX}`);
+
+            if(amountOfShapeX === 3){
+                console.log("Player X won!");
+                game.gameState = false;
+            }
+            else if(amountOfShapeO === 3){
+                console.log("Player O won!");
+                game.gameState = false;
+            }
+        }
+    }
+
+
+
+ const reset = () =>{
+   const resetButton = document.querySelector(".reset");
+
+   resetButton.addEventListener("click", () =>{
+        players = game.players;
+        gameBoard = game.board;
+        game.players[0].isTurn = false;
+        game.players[1].isTurn = false;
+        turnNotification.textContent = game.chooseFirstPlayer();
+        gameBoard.populateBoard();
+        game.gameState = true;
+
+        for(let i = 0; i < boxes.length; i++){
+            boxes[i].textContent = "";
+        }
+
+        console.log(gameBoard.spaces);
+   });
+   
+ }
+
 
 playTurn();
-console.log(game.board.spaces);
+reset();
+console.log(`${players[0].playerName} is ${players[0].shape.symbol} and ${players[1].playerName} is ${players[1].shape.symbol}`);
 
