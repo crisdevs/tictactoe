@@ -19,15 +19,11 @@ turnNotification.textContent = game.chooseFirstPlayer();
 const checkTurn = () => {
   if (players[0].isTurn) {
     turnNotification.textContent = players[1].shape.symbol;
-    console.log(turnNotification);
-    console.log(players[0].isTurn);
     players[0].isTurn = false;
     players[1].isTurn = true;
     return players[0];
   } else {
     turnNotification.textContent = players[0].shape.symbol;
-    console.log(turnNotification);
-    console.log(players[0].isTurn);
     players[0].isTurn = true;
     players[1].isTurn = false;
     return players[1];
@@ -42,13 +38,14 @@ const playTurn = () => {
     boxes[i].addEventListener("click", (e) => {
       if (e.target.textContent === "" && game.gameState) {
         const spaceClass = e.target.className;
+        //Gets the indexes from the class names of the targeted space on the board
         const firstIndex = parseInt(spaceClass.charAt(7));
         const secondIndex = parseInt(spaceClass.charAt(9));
         const activePlayer = checkTurn();
-
+        //Will put the player's shape on the clicked space.
         e.target.textContent = activePlayer.shape.symbol;
         gameBoard.spaces[firstIndex][secondIndex] = activePlayer.shape;
-        console.log(gameBoard.spaces);
+        //Functions to check if players won.
         checkHorizontalWin();
         checkVerticalWin();
         checkDiagonalWin();
@@ -56,13 +53,17 @@ const playTurn = () => {
     });
   }
 };
-
+/**
+ * Checks to see if a player has won horizontally
+ *
+ */
 const checkHorizontalWin = () => {
   const space = gameBoard.spaces;
-
+  //Loops through the array horizontally to check to see if there are 3 shapes in a row.
   for (let i = 0; i < space.length; i++) {
     let amountOfShapeX = 0;
     let amountOfShapeO = 0;
+    //Checks to see if there are empty spaces before checking if a player has won.
     if (
       space[i][0] !== undefined &&
       space[i][1] !== undefined &&
@@ -74,6 +75,7 @@ const checkHorizontalWin = () => {
         } else if (space[i][j].owner.shape.symbol === "O") {
           amountOfShapeO++;
         }
+        //If there are 3 of the same shapes in a row then it will display a winning text.
         if (amountOfShapeX === 3) {
           title.textContent = "Player X won!";
           game.gameState = false;
@@ -85,13 +87,17 @@ const checkHorizontalWin = () => {
     }
   }
 };
-
+/**
+ * Checks to see if a player has won vertically.
+ *
+ */
 const checkVerticalWin = () => {
   const space = gameBoard.spaces;
-
+  //Loops through the array vertically to check to see if there are 3 shapes in a row.
   for (let i = 0; i < space.length; i++) {
     let amountOfShapeX = 0;
     let amountOfShapeO = 0;
+    //Checks to see if there are empty spaces before checking if a player has won.
     if (
       space[0][i] !== undefined &&
       space[1][i] !== undefined &&
@@ -103,6 +109,7 @@ const checkVerticalWin = () => {
         } else if (space[j][i].owner.shape.symbol === "O") {
           amountOfShapeO++;
         }
+        //If there are 3 of the same shapes in a row then it will display a winning text.
         if (amountOfShapeX === 3) {
           title.textContent = "Player X won!";
           game.gameState = false;
@@ -114,18 +121,22 @@ const checkVerticalWin = () => {
     }
   }
 };
-
+/**
+ * Checks to see if a player has won diagonally.
+ *
+ */
 const checkDiagonalWin = () => {
   const space = gameBoard.spaces;
 
   let amountOfShapeX = 0;
   let amountOfShapeO = 0;
-
+  //Checks to see if there are empty spaces before checking if a player has won.
   if (
     space[0][0] !== undefined &&
     space[1][1] !== undefined &&
     space[2][2] !== undefined
   ) {
+    //Loops through the array diagonally starting from the left to check to see if there are 3 shapes in a row.
     for (let i = 0; i < space.length; i++) {
       if (space[i][i].owner.shape.symbol === "X") {
         amountOfShapeX++;
@@ -133,6 +144,7 @@ const checkDiagonalWin = () => {
         amountOfShapeO++;
       }
     }
+    //If there are 3 of the same shapes in a row then it will display a winning text.
     if (amountOfShapeX === 3) {
       title.textContent = "Player X won!";
       game.gameState = false;
@@ -147,9 +159,11 @@ const checkDiagonalWin = () => {
     space[1][1] !== undefined &&
     space[2][0] !== undefined
   ) {
+    //Need a decreasing index for when checking diagonally rightwards.
     let decreaseCount = 2;
     amountOfShapeO = 0;
     amountOfShapeX = 0;
+    //Loops through the array diagonally starting from the right to check to see if there are 3 shapes in a row.
     for (let y = 0; y < space.length; y++) {
       if (space[y][decreaseCount].owner.shape.symbol === "X") {
         amountOfShapeX++;
@@ -159,7 +173,6 @@ const checkDiagonalWin = () => {
       console.log(decreaseCount);
       decreaseCount--;
     }
-    console.log(`O:${amountOfShapeO}  X:${amountOfShapeX}`);
     if (amountOfShapeX === 3) {
       console.log(turnNotification);
       title.textContent = "Player X won!";
@@ -170,30 +183,32 @@ const checkDiagonalWin = () => {
     }
   }
 };
-
+/**
+ *  Resets game so users may play again.
+ *
+ */
 const reset = () => {
   const resetButton = document.querySelector(".reset");
 
   resetButton.addEventListener("click", () => {
+    //Creates new players
     players = game.players;
+    //Creates a new board
     gameBoard = game.board;
     game.players[0].isTurn = false;
     game.players[1].isTurn = false;
+    //Sets the notification to the player who will go first.
     turnNotification.textContent = game.chooseFirstPlayer();
     title.textContent = `Tic Tac Toe!`;
+    //Creates a new array for the board.
     gameBoard.populateBoard();
     game.gameState = true;
 
     for (let i = 0; i < boxes.length; i++) {
       boxes[i].textContent = "";
     }
-
-    console.log(gameBoard.spaces);
   });
 };
 
 playTurn();
 reset();
-console.log(
-  `${players[0].playerName} is ${players[0].shape.symbol} and ${players[1].playerName} is ${players[1].shape.symbol}`
-);
