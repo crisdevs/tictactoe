@@ -9,6 +9,7 @@ div[class^="square"]{
 }
 div[class^="square"]:hover{
     background-color: #e07a5f;
+    color:#2b2d42;
 }
 
 .container{
