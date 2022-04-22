@@ -25,14 +25,7 @@ class Game {
     const randNumber = Math.round(Math.random());
     const firstPlayer = this.players[randNumber];
     firstPlayer.isTurn = true;
-    firstPlayer.playerName = "Player 1";
-
-    for (let i = 0; i < this.players.length; i++) {
-      if (this.players[i].playerName !== "Player 1") {
-        this.players[i].playerName = "Player 2";
-      }
-    }
-
+   
     return firstPlayer.shape.symbol;
   }
 }
