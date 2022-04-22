@@ -1,7 +1,6 @@
 class Player {
 
-    constructor(playerName, isTurn){
-        this.playerName = playerName;
+    constructor(isTurn){
         this.isTurn = isTurn;
     }
 
