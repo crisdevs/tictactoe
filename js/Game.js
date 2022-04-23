@@ -52,6 +52,7 @@ class Game {
 /**
  * Sets event listeners to all playable squares for when the player plays their turn.
  *
+ * @param {HTML} boxes The collection of all the spaces in the HTML.
  */
  playTurn = (boxes) => {
   const title = document.querySelector(".title");
@@ -76,7 +77,11 @@ class Game {
   }
   
 };
-
+/**
+ * Checks to see if there was a tie between two players
+ *  @param {HTML} title The h1 in the html.
+ *
+ */
 checkTie = (title) =>{
   let counter = 0;
   for(let i = 0; i < this.board.spaces.length; i++){
@@ -94,10 +99,10 @@ if(counter === 9){
 }
 
 }
-/*
+/**
 **
  * Checks to see if a player has won horizontally
- *
+ *  @param {HTML} title The h1 in the html.
  */
 checkHorizontalWin = (title) => {
   const space = this.board.spaces;
@@ -131,6 +136,7 @@ checkHorizontalWin = (title) => {
 };
 /**
  * Checks to see if a player has won vertically.
+ * @param {HTML} title The h1 in the html.
  *
  */
 checkVerticalWin = (title) => {
@@ -165,6 +171,7 @@ checkVerticalWin = (title) => {
 };
 /**
  * Checks to see if a player has won diagonally.
+ * @param {HTML} title The h1 in the html.
  *
  */
 checkDiagonalWin = (title) => {
@@ -226,7 +233,8 @@ checkDiagonalWin = (title) => {
 /**
  *  Resets game so users may play again.
  *
- */
+ * @param {HTML} boxes The collection of all the spaces in the HTML.
+*/
 reset = (boxes) => {
   const resetButton = document.querySelector(".reset");
   const turnNotification = document.querySelector(".player-turn");
