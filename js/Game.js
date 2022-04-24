@@ -86,14 +86,17 @@ checkTie = (title) =>{
   let counter = 0;
   for(let i = 0; i < this.board.spaces.length; i++){
       counter+= this.board.spaces[i].filter(value => value.symbol).length;
-      console.log(counter);
-      // console.log(this.board.spaces[i].filter(value => value.symbol).length);
 }
-console.log(this.board.spaces);
 
 if(counter === 9){
   if(this.gameState){
     title.textContent = "Its a Tie!";
+    for(let i =0; i < this.board.spaces.length; i++){
+      for(let y =0; y < this.board.spaces.length; y++){
+        document.querySelector(`.square-${i}-${y}`).style.backgroundColor = "#2b2d42";
+        document.querySelector(`.square-${i}-${y}`).classList.remove("hovering");
+      }
+    }
     this.gameState = false;
   }
 }
@@ -106,6 +109,7 @@ if(counter === 9){
  */
 checkHorizontalWin = (title) => {
   const space = this.board.spaces;
+  const winningSpaces = [];
   //Loops through the array horizontally to check to see if there are 3 shapes in a row.
   for (let i = 0; i < space.length; i++) {
     let amountOfShapeX = 0;
@@ -125,9 +129,18 @@ checkHorizontalWin = (title) => {
         //If there are 3 of the same shapes in a row then it will display a winning text.
         if (amountOfShapeX === 3) {
           title.textContent = "Player X won!";
+          for(let k = 0; k < space[i].length; k++){
+          document.querySelector(`.square-${i}-${k}`).style.backgroundColor = "#2b2d42";
+          document.querySelector(`.square-${i}-${k}`).classList.remove("hovering");
+          }
           this.gameState = false;
         } else if (amountOfShapeO === 3) {
           title.textContent = "Player O won!";
+          for(let k = 0; k < space[i].length; k++){
+            document.querySelector(`.square-${i}-${k}`).style.backgroundColor = "#2b2d42";
+            document.querySelector(`.square-${i}-${k}`).classList.remove("hovering");
+            }
+    
           this.gameState = false;
         }
       }
@@ -160,9 +173,17 @@ checkVerticalWin = (title) => {
         //If there are 3 of the same shapes in a row then it will display a winning text.
         if (amountOfShapeX === 3) {
           title.textContent = "Player X won!";
+          for(let k = 0; k < space[i].length; k++){
+            document.querySelector(`.square-${k}-${i}`).style.backgroundColor = "#2b2d42";
+            document.querySelector(`.square-${k}-${i}`).classList.remove("hovering");
+            }
           this.gameState = false;
         } else if (amountOfShapeO === 3) {
           title.textContent = "Player O won!";
+          for(let k = 0; k < space[i].length; k++){
+            document.querySelector(`.square-${k}-${i}`).style.backgroundColor = "#2b2d42";
+            document.querySelector(`.square-${k}-${i}`).classList.remove("hovering");
+            }
           this.gameState = false;
         }
       }
@@ -196,9 +217,17 @@ checkDiagonalWin = (title) => {
     //If there are 3 of the same shapes in a row then it will display a winning text.
     if (amountOfShapeX === 3) {
       title.textContent = "Player X won!";
+      for(let k = 0; k < space[k].length; k++){
+        document.querySelector(`.square-${k}-${k}`).style.backgroundColor = "#2b2d42";
+        document.querySelector(`.square-${k}-${k}`).classList.remove("hovering");
+        }
       this.gameState = false;
     } else if (amountOfShapeO === 3) {
       title.textContent = "Player O won!";
+      for(let k = 0; k < space.length; k++){
+        document.querySelector(`.square-${k}-${k}`).style.backgroundColor = "#2b2d42";
+        document.querySelector(`.square-${k}-${k}`).classList.remove("hovering");
+        }
       this.gameState = false;
     }
   }
@@ -223,9 +252,21 @@ checkDiagonalWin = (title) => {
     }
     if (amountOfShapeX === 3) {
       title.textContent = "Player X won!";
+      decreaseCount = 2;
+      for(let k = 0; k < space.length; k++){
+        document.querySelector(`.square-${k}-${decreaseCount}`).style.backgroundColor = "#2b2d42";
+        document.querySelector(`.square-${k}-${decreaseCount}`).classList.remove("hovering");
+        decreaseCount--;
+        }
       this.gameState = false;
     } else if (amountOfShapeO === 3) {
       title.textContent = "Player O won!";
+      decreaseCount = 2;
+      for(let k = 0; k < space.length; k++){
+        document.querySelector(`.square-${k}-${decreaseCount}`).style.backgroundColor = "#2b2d42";
+        document.querySelector(`.square-${k}-${decreaseCount}`).classList.remove("hovering");
+        decreaseCount--;
+        }
       this.gameState = false;
     }
   }
@@ -256,6 +297,10 @@ reset = (boxes) => {
 
     for (let i = 0; i < boxes.length; i++) {
       boxes[i].textContent = "";
+      boxes[i].style.backgroundColor = "";
+      if(!(boxes[i].classList.contains("hovering"))){
+        boxes[i].classList.add("hovering");
+      }
     }
   });
 };
